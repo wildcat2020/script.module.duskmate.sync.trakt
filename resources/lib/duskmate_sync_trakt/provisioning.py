@@ -44,8 +44,8 @@ def provision(access_token=None, expires_at=None, **kwargs):
     # This route is deliberately standalone: Kodi executes the provider script outside TMDb
     # Helper's Python module environment. Persist through the provider's own Addon instance so
     # Kodi cannot later overwrite a cross-add-on settings cache.
-    from xbmc import Window
     from xbmcaddon import Addon
+    from xbmcgui import Window
 
     addon = Addon(ADDON_ID)
     stored = json.dumps(authorization, separators=(',', ':'), sort_keys=True)
