@@ -7,7 +7,7 @@ from tmdbhelper.lib.files.locker import mutexlock
 
 
 class TraktSettings:
-    addon_id = 'script.module.tmdbhelper.sync.trakt'
+    addon_id = 'script.module.duskmate.sync.trakt'
     mutex_lockname = 'TraktCheckingAuthorization'
     legacy_settings = {
         'cache_own_lists': 'trakt_cacheownlists',
@@ -57,7 +57,7 @@ class TraktSettings:
         if self.addon.getSettingBool('preferences_migrated'):
             return
         configured = self.get_configured_settings()
-        legacy_addon = Addon('plugin.video.themoviedb.helper')
+        legacy_addon = Addon('plugin.video.duskmate')
         for name, legacy_name in self.legacy_settings.items():
             if name not in configured:
                 self.migrate_setting(name, legacy_addon.getSetting(legacy_name))
@@ -75,7 +75,7 @@ class TraktSettings:
             return True
         configured = self.get_configured_settings()
         if 'token' not in configured and not self.addon.getSetting('token'):
-            legacy_addon = Addon('plugin.video.themoviedb.helper')
+            legacy_addon = Addon('plugin.video.duskmate')
             self.migrate_setting('token', legacy_addon.getSetting('trakt_token'))
         self.migrate_setting('credentials_migrated', 'true')
         self.clear_authorization_session()

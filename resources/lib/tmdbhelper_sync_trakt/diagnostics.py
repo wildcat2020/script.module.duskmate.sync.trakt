@@ -8,7 +8,7 @@ from tmdbhelper_sync_trakt.localization import get_localized
 
 
 class TraktDiagnosticFiles(FileUtils):
-    addondata = 'special://profile/addon_data/script.module.tmdbhelper.sync.trakt/'
+    addondata = 'special://profile/addon_data/script.module.duskmate.sync.trakt/'
 
 
 class TraktDiagnostic:

@@ -1,1 +1,2 @@
-CLIENT_ID = 'e6fde6173adf3c6af8fd1b0694b9b84d7c519cefc24482310e1de06c6abe5467'
+# Public identifier for Duskmate's registered Trakt device-flow client.
+CLIENT_ID = 'Ntud_uoBRBxhpFZULixoOjdFUbXNbto2eZp-ic3H5is'

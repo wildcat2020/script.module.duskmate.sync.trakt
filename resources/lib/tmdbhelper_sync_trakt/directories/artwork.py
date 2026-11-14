@@ -2,7 +2,7 @@ from xbmcaddon import Addon
 from xbmcvfs import translatePath, exists
 
 
-ADDONPATH = translatePath(Addon('script.module.tmdbhelper.sync.trakt').getAddonInfo('path'))
+ADDONPATH = translatePath(Addon('script.module.duskmate.sync.trakt').getAddonInfo('path'))
 
 
 def get_icon(path, item_type=None):

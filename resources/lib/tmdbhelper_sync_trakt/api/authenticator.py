@@ -136,7 +136,7 @@ class TraktAuthenticator:
 
     def configure_provider(self):
         from tmdbhelper.lib.script.sync.provider_setup import SyncProviderOnboarding
-        SyncProviderOnboarding('script.module.tmdbhelper.sync.trakt').configure()
+        SyncProviderOnboarding('script.module.duskmate.sync.trakt').configure()
 
     def notify_failure(self):
         Dialog().ok(get_localized(32103), get_localized(32111))

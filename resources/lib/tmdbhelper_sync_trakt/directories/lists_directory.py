@@ -149,5 +149,5 @@ class ListTraktDVDCalendarDirectory(ListTraktMovieCalendarDirectory):
 
 class ListTraktAuthenticate(ListTraktDirectory):
     def get_items(self, **kwargs):
-        executebuiltin('RunScript(script.module.tmdbhelper.sync.trakt,action=authenticate)')
+        executebuiltin('RunScript(script.module.duskmate.sync.trakt,action=authenticate)')
         return []

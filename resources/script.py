@@ -5,8 +5,8 @@ from xbmc import executebuiltin
 def run(action=None, payload=None, **parameters):
     if action is None:
         executebuiltin(
-            'RunScript(plugin.video.themoviedb.helper,configure_sync_provider,'
-            'addon_id=script.module.tmdbhelper.sync.trakt)')
+            'RunScript(plugin.video.duskmate,configure_sync_provider,'
+            'addon_id=script.module.duskmate.sync.trakt)')
         return
     from tmdbhelper_lib.sync.providers.interface import SyncProviderRegistry
     provider = SyncProviderRegistry().find_provider('trakt')
