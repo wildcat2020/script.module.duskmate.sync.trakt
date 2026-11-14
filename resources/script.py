@@ -8,6 +8,9 @@ def run(action=None, payload=None, **parameters):
             'RunScript(plugin.video.duskmate,configure_sync_provider,'
             'addon_id=script.module.duskmate.sync.trakt)')
         return
+    if action == 'provision':
+        from duskmate_sync_trakt.provisioning import provision_authorization
+        return provision_authorization(**parameters)
     from tmdbhelper_lib.sync.providers.interface import SyncProviderRegistry
     provider = SyncProviderRegistry().find_provider('trakt')
     if provider is None:

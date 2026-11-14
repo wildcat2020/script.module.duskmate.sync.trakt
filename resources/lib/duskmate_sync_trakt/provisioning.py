@@ -1,10 +1,26 @@
+import json
 import time
+from base64 import urlsafe_b64decode
+from binascii import Error as Base64Error
 
 from tmdbhelper.lib.files.futils import json_dumps
 from duskmate_sync_trakt.settings import TraktSettings
 
 
 MINIMUM_LIFETIME = 60
+
+
+def provision_authorization(authorization=None, **kwargs):
+    if not authorization:
+        raise ValueError('A Trakt authorization payload is required')
+    try:
+        payload = json.loads(urlsafe_b64decode(f'{authorization}===').decode('utf-8'))
+    except (Base64Error, TypeError, UnicodeDecodeError, ValueError) as error:
+        raise ValueError('The Trakt authorization payload is invalid') from error
+    return provision(
+        access_token=payload.get('access_token'),
+        expires_at=payload.get('expires_at'),
+    )
 
 
 def provision(access_token=None, expires_at=None, **kwargs):
