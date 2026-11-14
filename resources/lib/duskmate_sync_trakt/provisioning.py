@@ -3,11 +3,8 @@ import time
 from base64 import urlsafe_b64decode
 from binascii import Error as Base64Error
 
-from tmdbhelper.lib.files.futils import json_dumps
-from duskmate_sync_trakt.settings import TraktSettings
-
-
 MINIMUM_LIFETIME = 60
+ADDON_ID = 'script.module.duskmate.sync.trakt'
 
 
 def provision_authorization(authorization=None, **kwargs):
@@ -44,8 +41,21 @@ def provision(access_token=None, expires_at=None, **kwargs):
         'scope': 'public',
         'token_type': 'bearer',
     }
-    settings = TraktSettings()
-    settings.migrate_setting('token', json_dumps(authorization))
-    settings.migrate_setting('credentials_migrated', 'true')
-    settings.clear_authorization_session()
+    # This route is deliberately standalone: Kodi executes the provider script outside TMDb
+    # Helper's Python module environment. Persist through the provider's own Addon instance so
+    # Kodi cannot later overwrite a cross-add-on settings cache.
+    from xbmc import Window
+    from xbmcaddon import Addon
+
+    addon = Addon(ADDON_ID)
+    stored = json.dumps(authorization, separators=(',', ':'), sort_keys=True)
+    addon.setSetting('token', stored)
+    addon.setSetting('credentials_migrated', 'true')
+    if addon.getSetting('token') != stored:
+        raise RuntimeError('Kodi did not retain the Duskmate Trakt authorization')
+    window = Window(10000)
+    for name in (
+            'TraktUserToken', 'TraktIsAuth', 'TraktRefreshAttempts',
+            'TraktRefreshTimeStamp', 'TraktAttemptedLogin'):
+        window.clearProperty(name)
     return True
