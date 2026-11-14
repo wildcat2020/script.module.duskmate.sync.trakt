@@ -1,5 +1,13 @@
+import os
 import sys
 from xbmc import executebuiltin
+
+
+# Kodi executes this file as a script, so the add-on's xbmc.python.module extension is not
+# applied to the script itself. Add our library explicitly before importing provider modules.
+LIBRARY_PATH = os.path.join(os.path.dirname(__file__), 'lib')
+if LIBRARY_PATH not in sys.path:
+    sys.path.insert(0, LIBRARY_PATH)
 
 
 def run(action=None, payload=None, **parameters):
