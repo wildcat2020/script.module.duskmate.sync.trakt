@@ -13,14 +13,14 @@ def run(action=None, payload=None, **parameters):
     if provider is None:
         return
     if action in ('authenticate', 'revoke'):
-        from tmdbhelper_sync_trakt.account import TraktAccountActions
+        from duskmate_sync_trakt.account import TraktAccountActions
         actions = TraktAccountActions(provider)
         return {'authenticate': actions.authenticate, 'revoke': actions.revoke}[action]()
     if payload is not None:
         from json import loads
         from urllib.parse import unquote
         parameters.update(loads(unquote(payload)))
-    from tmdbhelper_sync_trakt.diagnostics import run_diagnostic
+    from duskmate_sync_trakt.diagnostics import run_diagnostic
     return run_diagnostic(provider, action, **parameters)
 
 
