@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.module.duskmate.sync.trakt" version="1.2.9.7" name="Duskmate Sync - Trakt" provider-name="jurialmunkey / Duskmate">
+<addon id="script.module.duskmate.sync.trakt" version="1.2.9.9" name="Duskmate Sync - Trakt" provider-name="jurialmunkey / Duskmate">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
         <import addon="script.module.jurialmunkey" version="0.2.35"/>
@@ -14,7 +14,7 @@
         <license>GPL-3.0-or-later</license>
         <source>https://github.com/wildcat2020/script.module.duskmate.sync.trakt</source>
         <assets>
-            <icon>resources/icon.png</icon>
+            <icon>resources/icon-v9.png</icon>
             <fanart>resources/fanart.jpg</fanart>
         </assets>
     </extension>
