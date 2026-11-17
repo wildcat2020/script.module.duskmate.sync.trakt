@@ -53,6 +53,30 @@ def provision(access_token=None, expires_at=None, **kwargs):
     addon.setSetting('credentials_migrated', 'true')
     if addon.getSetting('token') != stored:
         raise RuntimeError('Kodi did not retain the Duskmate Trakt authorization')
+
+    # Scrobbling is a helper capability selection, not a provider setting. This standalone
+    # provider process cannot import the helper's private module path reliably, so update the
+    # helper-owned string through Kodi's public Addon settings API. Preserve every provider the
+    # viewer has already selected and add only this explicitly authorized Trakt provider.
+    helper = Addon('plugin.video.duskmate')
+    setting_id = 'sync_provider_scrobbling'
+    current = helper.getSetting(setting_id)
+    if not current or current == 'never':
+        providers = []
+    elif current.startswith('['):
+        try:
+            providers = json.loads(current)
+        except (TypeError, ValueError):
+            providers = []
+    else:
+        providers = [current]
+    providers = [value for value in providers if isinstance(value, str) and value]
+    if 'trakt' not in providers:
+        providers.append('trakt')
+    scrobbling = json.dumps(list(dict.fromkeys(providers)), separators=(',', ':'))
+    helper.setSetting(setting_id, scrobbling)
+    if 'trakt' not in json.loads(helper.getSetting(setting_id) or '[]'):
+        raise RuntimeError('Kodi did not enable Trakt scrobbling')
     window = Window(10000)
     for name in (
             'TraktUserToken', 'TraktIsAuth', 'TraktRefreshAttempts',
